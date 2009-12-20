@@ -20,6 +20,7 @@
   </object>
   <object class="GtkWindow" id="window">
     <property name="title" translatable="yes">Melange Control Center</property>
+    <property name="window_position">center</property>
     <property name="default_width">340</property>
     <property name="default_height">300</property>
     <property name="icon">melange.png</property>
