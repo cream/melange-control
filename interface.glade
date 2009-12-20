@@ -5,7 +5,7 @@
   <object class="GtkListStore" id="liststore">
     <columns>
       <!-- column-name id -->
-      <column type="gint"/>
+      <column type="gchararray"/>
       <!-- column-name path -->
       <column type="gchararray"/>
       <!-- column-name title -->

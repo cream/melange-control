@@ -22,10 +22,10 @@ class MelangeControl:
         self.melange = cream.ipc.get_object('org.cream.melange')
 
         widgets = self.melange.list_widgets()
-        for w in widgets:
-            pb = gtk.gdk.pixbuf_new_from_file(w[2]).scale_simple(32, 32, gtk.gdk.INTERP_HYPER)
-            label = "<b>{0}</b>\n{1}".format(w[0], w[1])
-            self.liststore.append((0, w[3], w[0], w[1], pb, label))
+        for k,w in widgets.iteritems():
+            pb = gtk.gdk.pixbuf_new_from_file('melange.png').scale_simple(32, 32, gtk.gdk.INTERP_HYPER)
+            label = "<b>{0}</b>\n{1}".format(w['name'], w['comment'])
+            self.liststore.append((w['hash'], w['path'], w['name'], w['comment'], pb, label))
 
 
     def launch(self):
@@ -33,8 +33,8 @@ class MelangeControl:
         selection = self.treeview.get_selection()
         model, iter = selection.get_selected()
 
-        path = model.get_value(iter, 1)
-        self.melange.load_widget(path)
+        id = model.get_value(iter, 0)
+        self.melange.load_widget(id)
 
 
 if __name__ == '__main__':
