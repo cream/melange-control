@@ -5,12 +5,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -47,12 +47,12 @@ class MelangeControl(cream.Module):
         widgets = self.melange.list_widgets()
         for k, w in widgets.iteritems():
             if w.has_key('icon'):
-                p = os.path.join(os.path.dirname(w['path']), w['icon'])
+                p = os.path.join(w['path'], w['icon'])
                 pb = gtk.gdk.pixbuf_new_from_file(p).scale_simple(28, 28, gtk.gdk.INTERP_HYPER)
             else:
                 pb = gtk.gdk.pixbuf_new_from_file('melange.png').scale_simple(28, 28, gtk.gdk.INTERP_HYPER)
             label = "<b>{0}</b>\n{1}".format(w['name'], w['comment'])
-            self.liststore.append((w['hash'], w['path'], w['name'], w['comment'], pb, label))
+            self.liststore.append((w['hash'], w['filepath'], w['name'], w['comment'], pb, label))
 
 
     def launch(self):
