@@ -61,7 +61,7 @@ class MelangeControl(cream.Module):
         model, iter = selection.get_selected()
 
         id = model.get_value(iter, 0)
-        self.melange.load_widget(id)
+        self.melange.load_widget(id, False, False)
 
 
 if __name__ == '__main__':
