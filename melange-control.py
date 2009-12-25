@@ -37,6 +37,7 @@ class MelangeControl(cream.Module):
         self.treeview = self.interface.get_object('treeview')
         self.liststore = self.interface.get_object('liststore')
 
+        self.interface.get_object('window').connect('destroy', lambda *x: self.quit())
         self.interface.get_object('button_close').connect('clicked', lambda *x: self.quit())
         self.interface.get_object('button_add').connect('clicked', lambda *x: self.launch())
 
