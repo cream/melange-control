@@ -61,7 +61,7 @@ class MelangeControl(cream.Module):
         selection = self.treeview.get_selection()
         model, iter = selection.get_selected()
 
-        id = model.get_value(iter, 0)
+        id = model.get_value(iter, 2)
         self.melange.load_widget(id, False, False)
 
 
