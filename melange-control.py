@@ -25,8 +25,6 @@ import cream.ipc
 
 class MelangeControl(cream.Module):
 
-    __ipc_domain__ = 'org.cream.melange_control'
-
     def __init__(self):
 
         cream.Module.__init__(self)
