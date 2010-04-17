@@ -21,7 +21,6 @@ import os
 import gtk
 
 import cream
-import cream.gui.builder
 import cream.ipc
 
 class MelangeControl(cream.Module):
@@ -30,13 +29,18 @@ class MelangeControl(cream.Module):
 
         cream.Module.__init__(self)
 
-        self.interface = cream.gui.builder.GtkBuilderInterface('interface.glade')
+        self.interface = gtk.Builder()
+        self.interface.add_from_file('interface.glade')
 
-        self.interface.window.connect('destroy', lambda *x: self.quit())
-        self.interface.button_close.connect('clicked', lambda *x: self.quit())
-        self.interface.button_add.connect('clicked', lambda *x: self.launch())
+        self.treeview = self.interface.get_object('treeview')
+        self.liststore = self.interface.get_object('liststore')
+        self.scrolled = self.interface.get_object('scrolled')
 
-        self.interface.window.show_all()
+        self.interface.get_object('window').connect('destroy', lambda *x: self.quit())
+        self.interface.get_object('button_close').connect('clicked', lambda *x: self.quit())
+        self.interface.get_object('button_add').connect('clicked', lambda *x: self.launch())
+
+        self.interface.get_object('window').show_all()
 
         self.melange = cream.ipc.get_object('org.cream.melange')
 
@@ -47,13 +51,13 @@ class MelangeControl(cream.Module):
                 pb = gtk.gdk.pixbuf_new_from_file(p).scale_simple(28, 28, gtk.gdk.INTERP_HYPER)
             else:
                 pb = gtk.gdk.pixbuf_new_from_file('melange.png').scale_simple(28, 28, gtk.gdk.INTERP_HYPER)
-            label = "<b>{0}</b>\n{1}".format(w['name'], w['comment'])
-            self.interface.liststore.append((w['hash'], w['filepath'], w['name'], w['comment'], pb, label))
+            label = "<b>{0}</b>\n{1}".format(w['name'], w['description'])
+            self.liststore.append((w['id'], w['id'], w['name'], w['description'], pb, label))
 
 
     def launch(self):
 
-        selection = self.interface.treeview.get_selection()
+        selection = self.treeview.get_selection()
         model, iter = selection.get_selected()
 
         id = model.get_value(iter, 2)
@@ -61,10 +65,5 @@ class MelangeControl(cream.Module):
 
 
 if __name__ == '__main__':
-    from dbus.exceptions import DBusException
-    try:
-        melange_control = MelangeControl()
-    except DBusException:
-        raise RuntimeError("Could not connect to Melange via DBus.")
-    else:
-        melange_control.main()
+    melange_control = MelangeControl()
+    melange_control.main()
